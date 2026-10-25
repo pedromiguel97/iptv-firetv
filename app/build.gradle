@@ -11,8 +11,8 @@ android {
         minSdk 22          // Fire OS 5 (Fire TV Stick antigos) em diante
         targetSdk 34
         // cada build no GitHub vira uma versão nova, então dá pra atualizar por cima
-        versionCode (System.getenv('GITHUB_RUN_NUMBER') ?: '1').toInteger()
-        versionName "1.0.${System.getenv('GITHUB_RUN_NUMBER') ?: '0'}"
+        versionCode = (System.getenv('GITHUB_RUN_NUMBER') ?: '1') as Integer
+        versionName = "1.0.${System.getenv('GITHUB_RUN_NUMBER') ?: '0'}"
     }
 
     signingConfigs {
