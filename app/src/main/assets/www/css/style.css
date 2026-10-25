@@ -1,0 +1,339 @@
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/archivo.woff2") format("woff2-variations"), url("../fonts/archivo.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+}
+
+:root {
+  --madrugada: #0e1630;   /* fundo */
+  --superficie: #172240;  /* blocos */
+  --elevada: #22305a;     /* bloco focado */
+  --papel: #f1eee6;       /* texto e placas dos logos */
+  --apagado: #8e9ab8;
+  --sinal: #ffd23f;       /* foco */
+  --aovivo: #ff5a5f;
+  --erro: #ff8a7a;
+  --fonte: "Archivo", "SamsungOneUI", "Roboto", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--madrugada);
+  color: var(--papel);
+  font-family: var(--fonte);
+  font-weight: 500;
+}
+
+/* Números e títulos largos, no estilo de letreiro de emissora */
+.largo, #d-num, #d-titulo, #banner-num, #osd, .topo h2 {
+  font-stretch: 125%;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Estrutura ---------- */
+#guide {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 620px 1fr;
+  grid-template-rows: 100%;
+}
+
+/* ---------- Destaque (lado esquerdo) ---------- */
+#destaque {
+  background: var(--superficie);
+  padding: 72px 64px 64px 96px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.marca {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--apagado);
+  margin-bottom: auto;
+}
+
+#d-num {
+  font-size: 220px;
+  line-height: 0.9;
+  color: var(--sinal);
+  margin-bottom: 36px;
+}
+
+.placa {
+  background: var(--papel);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#d-placa {
+  width: 280px;
+  height: 160px;
+  padding: 22px;
+  margin-bottom: 36px;
+}
+#d-placa img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+#d-titulo {
+  font-size: 56px;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#d-sub {
+  font-size: 30px;
+  color: var(--apagado);
+  margin-top: 18px;
+}
+
+#d-acao {
+  font-size: 26px;
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 2px solid var(--elevada);
+  color: var(--papel);
+}
+#d-acao b { color: var(--sinal); }
+
+/* ---------- Lista (lado direito) ---------- */
+.lista {
+  display: flex;
+  flex-direction: column;
+  padding: 72px 96px 48px 64px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 36px;
+}
+.topo h2 { font-size: 48px; }
+#status { font-size: 26px; color: var(--apagado); text-align: right; }
+#status.erro { color: var(--erro); }
+
+#grid {
+  list-style: none;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 236px;
+  gap: 28px;
+  min-height: 0;
+  overflow: hidden;      /* rolagem feita via JS */
+  padding: 14px;         /* espaço pra borda de foco */
+  margin: -14px;
+}
+
+.item {
+  background: var(--superficie);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  outline: 5px solid transparent;
+  outline-offset: 0;
+  transition: transform 140ms ease-out, outline-color 140ms ease-out, background 140ms;
+}
+
+.item .placa {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+}
+.item .placa img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* Sem logo: mostra o número grande no lugar */
+.item .placa.vazia {
+  background: var(--elevada);
+  color: var(--apagado);
+  font-size: 64px;
+}
+
+.item .rodape {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+}
+.item .num {
+  font-size: 24px;
+  color: var(--apagado);
+  flex: none;
+}
+.item .nome {
+  font-size: 24px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#grid.paises { grid-auto-rows: 172px; }
+
+/* Tile de país: só tipografia */
+.item.pais { justify-content: space-between; padding: 22px 26px; }
+.item.pais .nome {
+  font-size: 34px;
+  font-stretch: 112%;
+  font-weight: 700;
+  white-space: normal;
+  line-height: 1.1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.item.pais .num { font-size: 26px; }
+
+.item.foco {
+  background: var(--elevada);
+  outline-color: var(--sinal);
+  transform: scale(1.05);
+}
+.item.foco .num { color: var(--sinal); }
+
+.hint {
+  display: flex;
+  gap: 48px;
+  font-size: 24px;
+  color: var(--apagado);
+  padding-top: 28px;
+}
+.hint b { color: var(--papel); font-weight: 700; }
+
+/* ---------- Player ---------- */
+#player { position: fixed; inset: 0; background: #000; }
+#video { width: 100%; height: 100%; background: #000; }
+
+/* Barra estilo "lower third" de telejornal */
+#banner {
+  position: absolute;
+  left: 96px;
+  bottom: 80px;
+  display: flex;
+  align-items: stretch;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(14, 22, 48, 0.92);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+#banner.some { opacity: 0; transform: translateY(24px); }
+
+#banner-num {
+  background: var(--sinal);
+  color: var(--madrugada);
+  font-size: 64px;
+  padding: 18px 36px;
+  display: flex;
+  align-items: center;
+}
+
+.banner-texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 44px 18px 36px;
+  gap: 6px;
+  max-width: 1100px;
+}
+#banner-name {
+  font-size: 44px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#banner-info {
+  font-size: 26px;
+  color: var(--apagado);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#banner-info.vivo { color: var(--papel); }
+#banner-info.vivo::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--aovivo);
+  animation: pulso 1.6s ease-in-out infinite;
+}
+@keyframes pulso { 50% { opacity: 0.3; } }
+
+/* Indicador de sintonia (enquanto o canal carrega) */
+#sintonia {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  height: 80px;
+}
+#sintonia span {
+  width: 20px;
+  background: var(--sinal);
+  border-radius: 4px;
+  animation: barra 900ms ease-in-out infinite;
+}
+#sintonia span:nth-child(1) { height: 30%; }
+#sintonia span:nth-child(2) { height: 65%; animation-delay: 150ms; }
+#sintonia span:nth-child(3) { height: 100%; animation-delay: 300ms; }
+@keyframes barra { 50% { opacity: 0.25; } }
+
+#player-msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1100px;
+  text-align: center;
+  font-size: 36px;
+  line-height: 1.45;
+  padding: 40px 56px;
+  background: rgba(14, 22, 48, 0.94);
+  border-radius: 16px;
+  white-space: pre-line;
+}
+
+/* ---------- Número digitado ---------- */
+#osd {
+  position: fixed;
+  top: 64px;
+  right: 96px;
+  font-size: 140px;
+  color: var(--madrugada);
+  background: var(--sinal);
+  padding: 4px 40px;
+  border-radius: 18px;
+  z-index: 10;
+}
+
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .item, #banner { transition: none; }
+  #sintonia span, #banner-info.vivo::before { animation: none; }
+}

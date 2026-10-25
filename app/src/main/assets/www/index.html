@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <title>TV Aberta</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="guide">
+    <!-- Destaque: mostra o item focado em tamanho grande -->
+    <aside id="destaque">
+      <p class="marca">TV Aberta</p>
+      <span id="d-num"></span>
+      <div id="d-placa" class="placa" hidden><img id="d-logo" alt=""></div>
+      <h1 id="d-titulo">Carregando canais…</h1>
+      <p id="d-sub"></p>
+      <p id="d-acao"></p>
+    </aside>
+
+    <section class="lista">
+      <header class="topo">
+        <h2 id="titulo"></h2>
+        <p id="status"></p>
+      </header>
+      <ol id="grid"></ol>
+      <footer id="hint" class="hint"></footer>
+    </section>
+  </main>
+
+  <section id="player" hidden>
+    <video id="video" autoplay playsinline></video>
+    <div id="sintonia" hidden><span></span><span></span><span></span></div>
+    <div id="banner">
+      <span id="banner-num"></span>
+      <div class="banner-texto">
+        <span id="banner-name"></span>
+        <span id="banner-info"></span>
+      </div>
+    </div>
+    <p id="player-msg" hidden></p>
+  </section>
+
+  <div id="osd" hidden></div>
+
+  <script src="js/hls.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
