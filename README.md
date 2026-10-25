@@ -7,7 +7,7 @@ Player de canais gratuitos do mundo inteiro (lista do projeto iptv-org), mesmo a
 Depois que o GitHub Actions terminar, o APK mais recente fica sempre em:
 
 ```
-https://github.com/SEU_USUARIO/tvaberta-firetv/releases/latest/download/TVAberta.apk
+https://github.com/pedromiguel97/tvaberta-firetv/releases/latest/download/TVAberta.apk
 ```
 
 Troque `SEU_USUARIO` pelo seu usuário do GitHub. O repositório precisa ser **público**.
